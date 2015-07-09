@@ -8,6 +8,8 @@ db:
     - MYSQL_ALLOW_EMPTY_PASSWORD=yes
   volumes:
     - ./data:/var/lib/mysql
+  ports:
+    - 13306:3306
 
 dbadmin:
   image: corbinu/docker-phpmyadmin
