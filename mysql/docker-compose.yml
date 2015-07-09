@@ -1,0 +1,20 @@
+db:
+  image: mysql
+  environment:
+    - MYSQL_ROOT_PASSWORD=myrootpass
+    - MYSQL_DATABASE=mydatabase
+    - MYSQL_USER=myuser
+    - MYSQL_PASSWORD=mypass
+    - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+  volumes:
+    - ./data:/var/lib/mysql
+
+dbadmin:
+  image: corbinu/docker-phpmyadmin
+  environment:
+    - MYSQL_USERNAME=root
+    - MYSQL_PASSWORD=myrootpass
+  links:
+   - db:mysql
+  ports:
+    - "8800:80"
