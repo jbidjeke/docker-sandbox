@@ -1,7 +1,8 @@
 #!/bin/bash
 
-# same as docker-compose but with docker nativ client
+# same as docker-compose but with docker native client
 
+# the mysql database
 docker run -e "MYSQL_ROOT_PASSWORD=myrootpass" \
            -e "MYSQL_DATABASE=mydatabase" \
            -e "MYSQL_USER=myuser" \
@@ -11,6 +12,7 @@ docker run -e "MYSQL_ROOT_PASSWORD=myrootpass" \
            -p 13306:3306 \
            --name db -d mysql:latest
 
+# the phpmyadmin
 docker run --link db:mysql \
            -p 8800:80 \
            --name dbadmin -d corbinu/docker-phpmyadmin
