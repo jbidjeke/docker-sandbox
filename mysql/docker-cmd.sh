@@ -9,4 +9,8 @@ docker run -e "MYSQL_ROOT_PASSWORD=myrootpass" \
            -e "MYSQL_ALLOW_EMPTY_PASSWORD=yes" \
            -v /$(pwd)/data://var/lib/mysql \
            -p 13306:3306 \
-           mysql:latest
+           --name db -d mysql:latest
+
+docker run --link db:mysql \
+           -p 8800:80 \
+           --name dbadmin -d corbinu/docker-phpmyadmin
