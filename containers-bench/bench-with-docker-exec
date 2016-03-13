@@ -1,0 +1,15 @@
+#!/bin/bash
+
+
+NB_ECHO=${NB_ECHO:=10}
+
+docker rm -f bench_test 2>/dev/null
+docker run -it -d --net=host --name bench_test ubuntu bash 1>/dev/null
+
+for i in $(seq 1 $NB_ECHO)
+do
+  docker exec -it bench_test echo -n "$i"
+done
+
+echo ""
+docker rm -f bench_test 1>/dev/null

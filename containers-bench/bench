@@ -1,0 +1,32 @@
+#!/bin/bash
+
+export NB_ECHO=100
+
+echo "Running $NB_ECHO 'echo' process."
+
+DOCKER_NEW_CT_TIME=$(./time-taken-by-creating-a-docker-container)
+
+BENCH_SCRIPT="./bench-without-docker"
+start=$(date +%s%N)
+$BENCH_SCRIPT >/dev/null
+end=$(date +%s%N)
+echo $(wcalc -P2 -q "($end - $start)/1000000000") $BENCH_SCRIPT
+
+BENCH_SCRIPT="./bench-running-the-bench-in-docker"
+start=$(date +%s%N)
+$BENCH_SCRIPT >/dev/null
+end=$(date +%s%N)
+echo $(wcalc -P2 -q "($end - $start)/1000000000 - $DOCKER_NEW_CT_TIME") $BENCH_SCRIPT " (possible negative value means 0.00)"
+
+BENCH_SCRIPT="./bench-with-docker-exec"
+start=$(date +%s%N)
+$BENCH_SCRIPT >/dev/null
+end=$(date +%s%N)
+echo $(wcalc -P2 -q "($end - $start)/1000000000 - $DOCKER_NEW_CT_TIME") $BENCH_SCRIPT
+
+BENCH_SCRIPT="./bench-with-docker"
+start=$(date +%s%N)
+$BENCH_SCRIPT >/dev/null
+end=$(date +%s%N)
+echo $(wcalc -P2 -q "($end - $start)/1000000000") $BENCH_SCRIPT
+

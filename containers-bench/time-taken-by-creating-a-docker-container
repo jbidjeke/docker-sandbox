@@ -1,0 +1,8 @@
+#!/bin/bash
+# calculate the number of second needed to create a docker container
+
+start=$(date +%s%N)
+docker run -it --rm --net=host ubuntu echo -n ""
+end=$(date +%s%N)
+
+echo $(wcalc -q "($end - $start)/1000000000")
